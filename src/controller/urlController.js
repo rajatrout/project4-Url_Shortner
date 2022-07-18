@@ -4,7 +4,7 @@ const validUrl = require('validator');
 const shortid = require('shortid');
 
 
-function isValid(value) {
+function isValid(value) {  //function to validated string
     if (typeof value !== 'string' || value.trim().length == 0) return true
     if (value == undefined || value == null) return true
     return false
@@ -21,6 +21,11 @@ exports.shortnerUrl = async(req, res) => {
         //valid url data
         if (isValid(data.longUrl)) {
             return res.status(400).send({ status: false, message: "Please provide long URL" })
+        }
+
+        let longUrl = await urlModel.findOne({ longUrl: data.longUrl }).select({ _id: 0, __v: 0, createdAt: 0, updatedAt: 0 })
+        if (longUrl) {
+            return res.status(200).send({ status: false, message: "Success", data: longUrl })
         }
 
         //checking for valid url
