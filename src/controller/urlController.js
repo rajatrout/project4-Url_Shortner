@@ -2,7 +2,7 @@ const urlModel = require('../models/urlModel');
 const shortId = require('shortid');
 const validUrl = require('validator');
 const shortid = require('shortid');
-const { trusted } = require('mongoose');
+
 
 function isValid(value) {
     if (typeof value !== 'string' || value.trim().length == 0) return true
