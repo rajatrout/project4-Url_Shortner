@@ -22,7 +22,8 @@ exports.shortnerUrl = async(req, res) => {
         if (isValid(data.longUrl)) {
             return res.status(400).send({ status: false, message: "Please provide long URL" })
         }
-
+        
+        // checking if same link is stored in db and sending back data
         let longUrl = await urlModel.findOne({ longUrl: data.longUrl }).select({ _id: 0, __v: 0, createdAt: 0, updatedAt: 0 })
         if (longUrl) {
             return res.status(200).send({ status: false, data: longUrl })
