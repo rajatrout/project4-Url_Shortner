@@ -12,7 +12,7 @@ const urlSchema = new mongoose.Schema({
 
     longUrl : {
         type: String,
-        required: 'url is required'
+        required: true
     },
 
     shortUrl : {
