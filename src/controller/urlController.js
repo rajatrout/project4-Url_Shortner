@@ -25,7 +25,7 @@ exports.shortnerUrl = async(req, res) => {
 
         let longUrl = await urlModel.findOne({ longUrl: data.longUrl }).select({ _id: 0, __v: 0, createdAt: 0, updatedAt: 0 })
         if (longUrl) {
-            return res.status(200).send({ status: false, message: "Success", data: longUrl })
+            return res.status(200).send({ status: false, data: longUrl })
         }
 
         //checking for valid url
@@ -46,7 +46,7 @@ exports.shortnerUrl = async(req, res) => {
         await urlModel.create(data);
         let responseData = await urlModel.findOne({ urlCode: urlCode }).select({ _id: 0, __v: 0, createdAt: 0, updatedAt: 0 })
 
-        return res.status(201).send({ status: true, message: "URL created succesfully", data: responseData })
+        return res.status(201).send({ status: true, data: responseData })
 
     } catch (error) {
         return res.status(500).send({ status: false, message: error.message })
