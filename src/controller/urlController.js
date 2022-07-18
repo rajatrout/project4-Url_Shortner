@@ -36,8 +36,8 @@ const urlModel = require('../models/urlModel');
            data.shortUrl = shortUrl;
 
            //creating document or short url
-           await urlCode.create(data);
-           let responseData = await urlCode.findOne({urlCode : urlCode}).select({_id:0 , __v:0 , createdAt: 0 , updatedAt: 0 })
+           await urlModel.create(data);
+           let responseData = await urlModel.findOne({urlCode : urlCode}).select({_id:0 , __v:0 , createdAt: 0 , updatedAt: 0 })
 
           return res.status(201).send({status: true, message: "URL created succesfully" , data:responseData})
 
