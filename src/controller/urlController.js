@@ -1,7 +1,7 @@
 const urlModel = require('../models/urlModel');
 const shortId = require('shortid');
 const validUrl = require('validator');
-const shortid = require('shortid');
+
 
 
 function isValid(value) {  //function to validated string
@@ -57,7 +57,7 @@ exports.getUrl = async(req, res) => {
     try {
         const urlCode = req.params.urlCode
 
-        if (!shortid.isValid(urlCode)) {
+        if (!shortId.isValid(urlCode)) {
             return res.status(400).send({ status: false, message: "URL Code is not valid." })
         }
 
