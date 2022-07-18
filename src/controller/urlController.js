@@ -4,7 +4,7 @@ const validUrl = require('validator');
 
 
 
-function isValid(value) {  //function to validated string
+function isValid(value) {  //function to validate string
     if (typeof value !== 'string' || value.trim().length == 0) return true
     if (value == undefined || value == null) return true
     return false
@@ -33,6 +33,10 @@ exports.shortnerUrl = async(req, res) => {
         if (!validUrl.isURL(data.longUrl)) {
             return res.status(400).send({ status: false, message: "Please provide valid URL" })
         }
+       
+        if(!data.urlCode){
+            
+        
         // generating URL code
         const urlCode = shortId.generate().toLowerCase();
 
@@ -42,15 +46,19 @@ exports.shortnerUrl = async(req, res) => {
 
         data.urlCode = urlCode;
         data.shortUrl = shortUrl;
+        }else{
+            let url = `http://localhost:3000/${data.urlCode}`;
+            data.shortUrl = url
+        }
 
         //creating document or short url
        const response= await urlModel.create(data);
       
        const responseData = {longUrl:response.longUrl,shortUrl:response.shortUrl,urlCode:response.urlCode}
-        return res.status(201).send({ status: true, data: responseData })
+        return res.status(201).send({ status: true, data: responseData });
 
     } catch (error) {
-        return res.status(500).send({ status: false, message: error.message })
+        return res.status(500).send({ status: false, message: error.message });
     }
 }
 
@@ -59,7 +67,7 @@ exports.getUrl = async(req, res) => {
         const urlCode = req.params.urlCode
 
         if (!shortId.isValid(urlCode)) {
-            return res.status(400).send({ status: false, message: "URL Code is not valid." })
+            return res.status(400).send({ status: false, message: "URL Code is not valid." });
         }
 
         const checkUrl = await urlModel.findOne({ urlCode: urlCode })
@@ -68,9 +76,9 @@ exports.getUrl = async(req, res) => {
             return res.status(404).send({ status: false, message: "URL not found." })
         }
 
-        return res.status(302).redirect(checkUrl.longUrl)
+        return res.status(302).redirect(checkUrl.longUrl);
 
     } catch (error) {
-        return res.status(500).send({ status: false, message: error.message })
+        return res.status(500).send({ status: false, message: error.message });
     }
 }
