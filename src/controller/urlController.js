@@ -63,11 +63,7 @@ exports.shortnerUrl = async (req, res) => {
         if (!validUrl.isURL(data.longUrl)) {
             return res.status(400).send({ status: false, message: "Please provide valid URL" })
         }
-
-
-
-
-        // generating URL code
+         // generating URL code
         const urlCode = shortId.generate().toLowerCase();
 
         //creating short URL
