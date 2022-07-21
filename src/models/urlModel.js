@@ -10,17 +10,17 @@ const urlSchema = new mongoose.Schema({
         trim: true
     },
 
-    longUrl : {
+    longUrl: {
         type: String,
         required: true
     },
 
-    shortUrl : {
+    shortUrl: {
         type: String,
-        required : true,
+        required: true,
         unique: true
     }
 
-}, {timestamps: true})
+}, { timestamps: true })
 
-module.exports = mongoose.model('Url',urlSchema)
+module.exports = mongoose.model('Url', urlSchema)
